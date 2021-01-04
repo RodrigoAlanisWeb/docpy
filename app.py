@@ -1,4 +1,4 @@
-from functions import run_r, run_w
+from functions import run_r, run_w, run_a
 
 # Funcion principal
 def docpy():
@@ -12,5 +12,7 @@ def docpy():
         return run_r()
     elif run_type == 'w':
         return run_w()
+    elif run_type == 'a':
+        return run_a()
 
 print(docpy())

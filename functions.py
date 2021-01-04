@@ -1,6 +1,8 @@
 import os
 
 # Lectura
+
+
 def read(route, readAll, line=False):
     if verify_path(route, 'r'):
         file = open(route)
@@ -17,9 +19,11 @@ def read(route, readAll, line=False):
         return 'La ruta de el archivo no es valida'
 
 # Escritura
+
+
 def write(route, text, in_line=False, line=False):
     if verify_path(route):
-        
+
         if in_line != True:
             file = open(route, 'a')
             if file.writable():
@@ -30,7 +34,7 @@ def write(route, text, in_line=False, line=False):
             content = open(route).read().splitlines()
             if line > len(content):
                 return 'La linea no existe'
-            
+
             line -= 1
             content[line] += text
 
@@ -41,7 +45,21 @@ def write(route, text, in_line=False, line=False):
     else:
         return 'La ruta de el archivo no es valida'
 
+# Escritura y borrado
+
+
+def delete_write(route, text):
+    if verify_path(route):
+        file = open(route, 'w')
+        file.write(text)
+        return 'Hecho'
+        file.close()
+    else:
+        return 'La ruta de el archivo no es valida'
+
 # Verificacion de rutas
+
+
 def verify_path(route):
     try:
         with open(route) as f:
@@ -52,6 +70,8 @@ def verify_path(route):
         return False
 
 # Correr la lectura
+
+
 def run_r():
     route = input('Ingresa la ruta de el archivo: ')
     readAll = input('Desea leer todo el archivo: ')
@@ -63,6 +83,8 @@ def run_r():
         return read(route, readAll)
 
 # Correr la escritura
+
+
 def run_w():
     route = input('Ingresa la ruta de el archivo: ')
     text = input('Ingrese el texto: ')
@@ -70,6 +92,12 @@ def run_w():
 
     if in_line.lower() == 'si':
         line = input('En que linea desea hacerlo?: ')
-        return write(route,text,True,int(line))
+        return write(route, text, True, int(line))
     elif in_line.lower() == 'no':
-        return write(route,text)
+        return write(route, text)
+
+def run_a():
+    route = input('Ingresa la ruta de el archivo: ')
+    text = input('Ingrese el texto: ')
+    return delete_write(route,text)
+

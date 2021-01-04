@@ -1,25 +1,25 @@
 import os
+from colorama import Fore, Back, Style
 
 # Lectura
 
-
 def read(route, readAll, line=False):
-    if verify_path(route, 'r'):
-        file = open(route)
+    if verify_path(route):
+        file = open(route,'r')
         if file.readable():
             if readAll:
-                return file.read()
+                print(Fore.BLACK,file.read())
             else:
                 line -= 1
-                return file.readlines()[line]
+                print(Fore.BLACK,file.readlines()[line])
         else:
-            return 'La ruta de el archivo no es valida'
+            print(Fore.RED,'La ruta de el archivo no es valida')
         file.close()
     else:
-        return 'La ruta de el archivo no es valida'
+        print(Fore.RED,'La ruta de el archivo no es valida')
+    exit()
 
 # Escritura
-
 
 def write(route, text, in_line=False, line=False):
     if verify_path(route):
@@ -28,22 +28,23 @@ def write(route, text, in_line=False, line=False):
             file = open(route, 'a')
             if file.writable():
                 file.write('\n' + text)
-                return 'Hecho'
+                print('Hecho')
             file.close()
         elif in_line:
             content = open(route).read().splitlines()
             if line > len(content):
-                return 'La linea no existe'
+                print('La linea no existe')
 
             line -= 1
             content[line] += text
 
             file = open(route, 'w')
             file.writelines('\n'.join(content))
-            return 'Hecho'
+            print('Hecho')
             file.close()
     else:
-        return 'La ruta de el archivo no es valida'
+        print(Fore.RED,'La ruta de el archivo no es valida')
+    exit()
 
 # Escritura y borrado
 
@@ -52,13 +53,32 @@ def delete_write(route, text):
     if verify_path(route):
         file = open(route, 'w')
         file.write(text)
-        return 'Hecho'
+        print('Hecho')
         file.close()
     else:
-        return 'La ruta de el archivo no es valida'
+        print(Fore.RED,'La ruta de el archivo no es valida')
+    exit()
+
+# Creacion de archivos
+
+def create_doc(route, name):
+    if verify_dir(route):
+        file = open(route + name,'w')
+        file.write('Gracias por usar mi script')
+        print('Hecho')
+        file.close()
+    else:
+        print(Fore.RED,'La ruta de el archivo no es valida')
+    exit()
+
 
 # Verificacion de rutas
 
+def verify_dir(route):
+    if os.path.isdir(route):
+        return True
+    else:
+        return False
 
 def verify_path(route):
     try:
@@ -78,9 +98,9 @@ def run_r():
 
     if readAll.lower() == 'no':
         line = input('Ingrese el numero de la linea que desea leer: ')
-        return read(route, False, int(line))
+        print(Fore.BLACK,read(route, False, int(line)))
     elif readAll.lower() == 'si':
-        return read(route, readAll)
+        print(read(route, readAll))
 
 # Correr la escritura
 
@@ -92,12 +112,17 @@ def run_w():
 
     if in_line.lower() == 'si':
         line = input('En que linea desea hacerlo?: ')
-        return write(route, text, True, int(line))
+        print(write(route, text, True, int(line)))
     elif in_line.lower() == 'no':
-        return write(route, text)
+        print(write(route, text))
 
 def run_a():
     route = input('Ingresa la ruta de el archivo: ')
     text = input('Ingrese el texto: ')
-    return delete_write(route,text)
+    print(delete_write(route,text))
+
+def run_c():
+    route = input('Ingresa la ruta de el archivo: ')
+    name = input('Ingresa el nombre con la extencion de el archivo: ')
+    print(create_doc(route,name))
 

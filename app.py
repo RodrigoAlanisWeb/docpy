@@ -1,4 +1,6 @@
 from functions import run_r, run_w
+
+# Funcion principal
 def docpy():
     run_type = input(
         'Que Quieres Hacer ?(r = leer,w = escribir sin eliminar nada,a = eliminar todo y escribir): ')

@@ -1,6 +1,6 @@
 import os
 
-
+# Lectura
 def read(route, readAll, line=False):
     if verify_path(route, 'r'):
         file = open(route)
@@ -16,7 +16,7 @@ def read(route, readAll, line=False):
     else:
         return 'La ruta de el archivo no es valida'
 
-
+# Escritura
 def write(route, text, in_line=False, line=False):
     if verify_path(route):
         
@@ -33,7 +33,7 @@ def write(route, text, in_line=False, line=False):
             
             line -= 1
             content[line] += text
-            
+
             file = open(route, 'w')
             file.writelines('\n'.join(content))
             return 'Hecho'
@@ -41,7 +41,7 @@ def write(route, text, in_line=False, line=False):
     else:
         return 'La ruta de el archivo no es valida'
 
-
+# Verificacion de rutas
 def verify_path(route):
     try:
         with open(route) as f:
@@ -51,7 +51,7 @@ def verify_path(route):
     except IOError as e:
         return False
 
-
+# Correr la lectura
 def run_r():
     route = input('Ingresa la ruta de el archivo: ')
     readAll = input('Desea leer todo el archivo: ')
@@ -62,7 +62,7 @@ def run_r():
     elif readAll.lower() == 'si':
         return read(route, readAll)
 
-
+# Correr la escritura
 def run_w():
     route = input('Ingresa la ruta de el archivo: ')
     text = input('Ingrese el texto: ')
